@@ -16,7 +16,8 @@ const movieSchema = {
     movie:String,
     cast:String,
     director:String,
-    type:String,    
+    type:String, 
+    rating:Number
 }
 
 const Movie = mongoose.model('Movie', movieSchema);
@@ -26,7 +27,7 @@ app.get('/',(req,res)=>{
 });
 
 
-//create or add data
+//update or add data
 app.post('/',(req,res)=>{
 
     const newMovie = new Movie({
@@ -34,7 +35,7 @@ app.post('/',(req,res)=>{
         cast : req.body.cName,
         director : req.body.dName,
         type : req.body.gName,
-       
+        rating: req.body.rName
     })
     newMovie.save();
     res.send('Thank you for adding');
@@ -57,14 +58,12 @@ app.get('/movies',(req,res)=>{
 app.delete('/movies',(req,res)=>{
     Movie.deleteMany((err)=>{
         if(!err){
-            res.send('its deleting')
+            res.send('Successfully deleting all articles.')
         }else{
             res.send(err)
         }
     })
 });
-
-
 
 app.listen(port,()=>{
     console.log(`Server is running on ${port}`);
